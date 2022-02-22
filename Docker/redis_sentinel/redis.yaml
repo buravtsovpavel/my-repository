@@ -1,0 +1,25 @@
+version: '3.7'
+services:   
+    redis1:
+        image: 'redis:latest'
+        networks:
+          redis-net: 
+            ipv4_address: 10.6.0.2
+    redis2:
+        image: 'redis:latest'
+        networks:
+          redis-net:
+            ipv4_address: 10.6.0.3
+    redis3:  
+        image: 'redis:latest'
+        networks: 
+          redis-net:
+            ipv4_address: 10.6.0.4
+            
+networks:
+  redis-net:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.6.0.0/16
+

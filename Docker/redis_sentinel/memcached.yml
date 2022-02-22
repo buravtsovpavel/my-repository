@@ -1,0 +1,20 @@
+version: '3.7'
+
+services:    
+    memcached1:
+        image: 'memcached:latest'
+        networks:
+          memcached-net:
+            ipv4_address: 10.5.0.2
+    memcached2:
+        image: 'memcached:latest'
+        networks:
+          memcached-net:
+            ipv4_address: 10.5.0.3
+
+networks:
+  memcached-net:
+    driver: bridge
+    ipam:
+     config:
+       - subnet: 10.5.0.0/16
