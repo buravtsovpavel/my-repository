@@ -1,0 +1,40 @@
+---
+- name: Create Directories download unpacking
+  hosts: all
+  become: yes
+
+  vars:
+   dir : /tmp/testdisk/
+   dest_dir : /tmp/testdisk/
+   uri_download : https://www.cgsecurity.org/testdisk-7.2-WIP.linux26-x86_64.tar.bz2
+   unpacking_tar : /tmp/testdisk/testdisk-7.2-WIP.linux26-x86_64.tar.bz2
+   unpacking_dir : /tmp/testdisk/
+
+
+  tasks:
+  - name: Chek and print linux version
+    debug: var=ansible_os_family
+  
+  - name: Create Directories
+    file:
+     path: "{{ dir }}"
+     state: directory
+     owner: root
+     group: root
+     mode: 0777
+
+  - name: CURL download file
+    uri:
+     url: "{{ uri_download }}"
+     dest: "{{ dest_dir }}"
+
+  - name: Unpacking
+    unarchive:
+     src: "{{ unpacking_tar }}"
+     dest: "{{ unpacking_dir }}"
+     remote_src: yes
+    when: ansible_os_family == "Debian"
+  
+  - name:
+    shell: gunzip {{ unpacking_tar }}
+    when: ansible_os_family == "RedHat"  

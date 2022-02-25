@@ -1,0 +1,44 @@
+---
+# tasks file for docker_install
+
+ - name: prepare install
+   apt:
+     pkg:
+       - ca-certificates
+       - curl
+       - gnupg
+       - lsb-release
+     update_cache: yes
+     state: latest
+
+# add docker repo
+ - name: add docker repo key
+   apt_key:
+     url: "https://download.docker.com/linux/ubuntu/gpg"
+     state: present
+
+ - name: add docker repo repository
+   apt_repository:
+     repo: "deb [arch={{ docker_arch }}] https://download.docker.com/linux/{{ ansible_distribution|lower }} {{ ansible_lsb.codename }} stable"
+     filename: "docker"
+     state: present
+ 
+# install docker
+ - name: install docker
+   apt:
+     pkg:
+       - docker-ce
+       - docker-ce-cli
+       - containerd.io
+       - python3-docker
+     update_cache: yes
+     state: latest
+
+# install docker_compose
+ - name: install docker_compose
+   get_url:
+     url: "{{ docker_compose_url }}"
+     dest: "{{ docker_compose_path }}"
+     owner: root
+     group: root
+     mode: 0755

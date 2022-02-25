@@ -1,0 +1,53 @@
+--- 
+- name: install apache 
+  hosts: all
+  become: yes
+
+  vars:
+    source_file: ./index.html
+    destin_file: /var/www/html
+  
+  tasks:
+  - name: Chek and print linux version
+    debug: var=ansible_os_family
+
+  - name: update ubuntu
+    apt :
+     update_cache: yes                                                   
+    when: ansible_os_family == "Debian"
+
+  - block:  # Block for CentOS
+
+      - name: install apache web server for Red Hat
+        yum: name=httpd state=latest
+
+      - name: copy homepage file to web server
+        copy: src={{ source_file }} dest={{ destin_file }} mode=0555
+        notify: restart apache Red Hat
+
+      - name: Start web server for Red Hat
+        service: name=httpd state=started enabled=yes
+
+    when: ansible_os_family == "RedHat"  
+
+
+  - block:  # Block for Ubuntu
+
+      - name: install apache web server for Debian
+        yum: name=apache2 state=latest
+
+      - name: copy homepage file to web server
+        copy: src={{ source_file }} dest={{ destin_file }} mode=0555
+        notify: restart apache Debian
+
+      - name: Start web server for Red Hat
+        service: name=apache2 state=started enabled=yes
+
+    when: ansible_os_family == "Debian"  
+
+  handlers: 
+  - name: restart apache Red Hat
+    service: name=httpd state=restarted
+
+  - name: restart apache Debian
+    service: name=apache2 state=restarted  

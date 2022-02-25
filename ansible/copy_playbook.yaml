@@ -1,0 +1,24 @@
+---
+- name: nginx install
+  hosts: yandex
+  become: yes
+
+  tasks:
+  - name: nginx install 
+    apt:
+      name=nginx
+      state=latest
+   
+  - name: Start nginx and Enable it on the every boot
+    service:
+      name=nginx
+      state=started
+      enabled=yes
+
+  - name: Copy file with owner and permissions
+    ansible.builtin.copy:
+      src: /home/buravtsov/netology/Ansible/my_index.html
+      dest: /var/www/html/index.nginx-debian.html
+      owner: buravtsov-vm
+      group: buravtsov-vm
+      mode: '0644'

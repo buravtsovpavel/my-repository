@@ -1,0 +1,20 @@
+---
+- name: Copy to motd
+  hosts: all
+  become: yes
+
+  vars:
+   motd_text : "Have a nice day, Admin!\n"
+
+  tasks:
+  - name: Copy to the file
+    copy:
+      content: "{{ ansible_facts.all_ipv4_addresses, ansible_facts.hostname }} \n"
+      dest: "/etc/motd"
+
+  - name: add to file
+    lineinfile:
+        path: /etc/motd
+        create: yes
+        line: "{{ motd_text }}"
+        state: present

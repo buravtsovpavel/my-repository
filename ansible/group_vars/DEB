@@ -1,0 +1,4 @@
+---
+ansible_user                 : buravtsov-vm
+
+ansible_ssh_private_key_file : /home/buravtsov/.ssh/id_rsa
