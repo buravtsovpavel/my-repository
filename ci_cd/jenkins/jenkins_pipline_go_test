@@ -1,0 +1,23 @@
+pipline {
+   agent any
+
+
+   stages {
+       stage('git') {
+           steps {
+               git branch: 'main',
+                   url: 'https://github.com/buravtsovpavel/netology-test'
+           }
+       }
+       stage('test') {
+           steps {
+               sh "go test ."
+           }
+       }
+       stage('build') {
+           steps {
+               sh "docker build ."
+           }
+       }
+   }  
+}

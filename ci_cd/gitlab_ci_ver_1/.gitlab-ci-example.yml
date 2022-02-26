@@ -1,0 +1,32 @@
+stages:
+    - build
+    - test
+    - deploy
+
+Docker build:
+    stage : build
+    script: 
+        - echo 'Docker build is successfull'
+    tags :
+        - centos-shell
+
+Unit tests:
+    stage : test
+    script :
+        - echo 'This is unit test'
+    tags : 
+        - centos-shell
+
+Linter tests:
+    stage : test
+    script : 
+        - echo 'This is linter test'
+    tags : 
+        - centos-shell
+
+Deploy to dev:
+    stage : deploy
+    script : 
+    - echo "${CI_PROJECT_NAME} from branch ${CI_COMMIT_REF_SLUG} [#${CI_JOB_STAGE}]" >> /home/buravtsov/netology/build.txt
+    tags : 
+        - centos-shell

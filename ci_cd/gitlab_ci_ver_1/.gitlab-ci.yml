@@ -1,0 +1,23 @@
+stages:       
+  - test
+  - build
+test:
+    stage: test
+    image: golang:1.17-alpine
+    script:
+        - go test .
+build_manual:
+    stage: build
+    image: docker:latest
+    when: manual
+    except:
+      - main
+    script:
+        - docker build .
+build:
+    stage: build
+    image: docker:latest
+    only:
+      - main
+    script:
+        - docker build .
