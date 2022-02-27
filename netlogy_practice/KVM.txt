@@ -1,0 +1,48 @@
+virt-install -n alpinelinux86 \
+--autostart \
+--noautoconsole \
+--network=bridge:br0 \
+--ram 1024 --arch=i686 \
+--vcpus=1 --cpu host --check-cpu \
+--disk path=/kvm/vhdd/alpinelinux86.img,size=1 \
+--cdrom /kvm/iso/alpine-standard-3.13.5-x86.iso \
+--graphics vnc,listen=0.0.0.0,password=password \
+--os-type linux --os-variant=alpinelinux3.8 --boot cdrom,hd,menu=on
+
+
+ sudo virt-install \
+--virt-type=kvm \
+--name alpinelinux86_2 \
+--ram 1048 \
+--vcpus=1 \
+--os-variant=alpinelinux3.8 \
+--hvm \
+--cdrom=/kvm/iso/alpine-standard-3.13.5-x86.iso \
+--network=bridge:br0,model=virtio \
+--graphics vnc,listen=0.0.0.0,password=password \
+--disk path=/kvm/vhdd/alpinelinux86_2.qcow2,size=1,bus=virtio,format=qcow2
+
+ sudo virt-install \
+--virt-type=kvm \
+--name alpinelinux_aarch64 \
+--ram 1048 \
+--vcpus=1 \
+--os-variant=alpinelinux3.8 \
+--hvm \
+--cdrom=/kvm/iso/alpine-standard-3.14.2-aarch64.iso \
+--network=bridge:br0,model=virtio \
+--graphics vnc,listen=0.0.0.0,password=password \
+--disk path=/kvm/vhdd/alpinelinux_aarch64.qcow2,size=1,bus=virtio,format=qcow2
+
+
+ sudo virt-install \
+--virt-type=kvm \
+--name alpinelinux_ppc64le \
+--ram 1048 \
+--vcpus=1 \
+--os-variant=alpinelinux3.8 \
+--hvm \
+--cdrom=/kvm/iso/alpine-standard-3.14.2-ppc64le.iso \
+--network=bridge:br0,model=virtio \
+--graphics vnc,listen=0.0.0.0,password=password \
+--disk path=/kvm/vhdd/alpinelinux_ppc64le.qcow2,size=1,bus=virtio,format=qcow2
