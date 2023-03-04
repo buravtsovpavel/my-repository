@@ -16,7 +16,7 @@
 
 обновление ядра из elrepo прошло гладко, всё по методичке
 
-![версия ядра после перезагрузки]([./screenshots/1_1.jpeg](https://github.com/buravtsovpavel/my-repository/blob/main/1_1.jpg))
+![версия ядра после перезагрузки](https://github.com/buravtsovpavel/my-repository/blob/main/1_1.jpg)
 
 
 
